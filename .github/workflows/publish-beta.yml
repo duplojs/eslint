@@ -21,16 +21,13 @@ jobs:
         uses: thehanimo/pr-title-checker@v1.4.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          configuration_path: ".github/check-pr-tilte-publish.json"
+          configuration_path: ".github/check-title.json"
       
       - name: get develop branch
-        uses: actions/checkout@v3
-        with:
-          ref: develop
-          fetch-depth: 0 
+        uses: actions/checkout@v4
 
       - name: get current version
-        uses: duplojs/action-semver@v0.2.1
+        uses: duplojs/action-semver@v0.3.0
         id: semver
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
