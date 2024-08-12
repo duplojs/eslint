@@ -20,7 +20,7 @@ jobs:
         uses: thehanimo/pr-title-checker@v1.4.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          configuration_path: ".github/develop@check-title.json"
+          configuration_path: ".github/workflows/develop@check-title.json"
       
       - name: get develop branch
         uses: actions/checkout@v4
@@ -59,12 +59,6 @@ jobs:
         run: npm run build
       
       - name: Publish to NPM
-        run: npm publish
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: |
-            Published at : `${{ steps.semver.outputs.COMPUTED_VERSION }}`.
