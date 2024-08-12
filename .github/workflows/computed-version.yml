@@ -1,0 +1,28 @@
+name: computed-version
+
+on: [pull_request]
+
+jobs:
+  runs-on: ubuntu-latest
+    steps:
+      - name: get current version
+        uses: duplojs/action-semver@v0.2.1
+        id: semver
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_OWNER: duplojs
+          GITHUB_REPO: eslint
+          GITHUB_BRANCHE: develop
+          REGEXP_PATCH: '^fix'
+          REGEXP_MINOR: '^feat'
+          REGEXP_MAJOR: '^break'
+          OUTPUT_FORMAT: '{MAJOR}.{MINOR}.{PATCH}-beta'
+
+      - name: see version
+        run: echo "${{ steps.semver.outputs.COMPUTED_VERSION }}"
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            Target version : `${{ steps.semver.outputs.COMPUTED_VERSION }}`.
