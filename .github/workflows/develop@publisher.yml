@@ -1,4 +1,4 @@
-name: publish-beta
+name: publisher
 
 on:
   pull_request_target:
@@ -8,7 +8,6 @@ on:
 
 jobs:
   publisher:
-    name: publisher
     runs-on: ubuntu-latest
     steps:
       - name: check if event is merge
@@ -42,12 +41,6 @@ jobs:
       - name: see version
         run: echo "${{ steps.semver.outputs.COMPUTED_VERSION }}"
 
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: |
-            Publish in progress at : `${{ steps.semver.outputs.COMPUTED_VERSION }}`.
-
       - name: set Version In package.json
         run: |
           sed -i 's/"version":.*".*"/"version": "'${{ steps.semver.outputs.COMPUTED_VERSION }}'"/' package.json
@@ -56,6 +49,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org/'
+          scope: '@mathcovax'
 
       - name: install dependencies
         run: npm ci
