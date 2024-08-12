@@ -1,6 +1,13 @@
 name: computed-version
 
-on: [pull_request]
+on: 
+  pull_request:
+    branches:
+      - develop
+    types:
+      - opened
+      - edited
+      - synchronize
 
 jobs:
   computed-version:
@@ -10,7 +17,7 @@ jobs:
         uses: thehanimo/pr-title-checker@v1.4.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          configuration_path: ".github/check-title.json"
+          configuration_path: ".github/workflows/develop@check-title.json"
 
       - name: get current version
         uses: duplojs/action-semver@v0.3.0
