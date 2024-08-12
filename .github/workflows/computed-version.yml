@@ -3,10 +3,17 @@ name: computed-version
 on: [pull_request]
 
 jobs:
-  runs-on: ubuntu-latest
+  computed-version:
+    runs-on: ubuntu-latest
     steps:
+      - name: title checker
+        uses: thehanimo/pr-title-checker@v1.4.2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          configuration_path: ".github/check-title.json"
+
       - name: get current version
-        uses: duplojs/action-semver@v0.2.1
+        uses: duplojs/action-semver@v0.3.0
         id: semver
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -17,6 +24,7 @@ jobs:
           REGEXP_MINOR: '^feat'
           REGEXP_MAJOR: '^break'
           OUTPUT_FORMAT: '{MAJOR}.{MINOR}.{PATCH}-beta'
+          CURRENT_PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}
 
       - name: see version
         run: echo "${{ steps.semver.outputs.COMPUTED_VERSION }}"
