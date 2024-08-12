@@ -1,14 +1,13 @@
-name: publish-beta
+name: publisher
 
 on:
   pull_request_target:
     branches:
-      - develop
+      - main
     types: [closed]
 
 jobs:
   publisher:
-    name: publisher
     runs-on: ubuntu-latest
     steps:
       - name: check if event is merge
@@ -16,21 +15,18 @@ jobs:
           if [ "${{ github.event.pull_request.merged }}" != "true" ]; then
             exit 1
           fi
-
-      - name: title checker
-        uses: thehanimo/pr-title-checker@v1.4.2
+          
+      - uses: thehanimo/pr-title-checker@v1.4.2
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          configuration_path: ".github/check-pr-tilte-publish.json"
+          pass_on_octokit_error: false
+          configuration_path: ".github/workflows/main@check-title.json"
       
       - name: get develop branch
-        uses: actions/checkout@v3
-        with:
-          ref: develop
-          fetch-depth: 0 
+        uses: actions/checkout@v4
 
       - name: get current version
-        uses: duplojs/action-semver@v0.2.1
+        uses: duplojs/action-semver@v0.3.0
         id: semver
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -40,16 +36,9 @@ jobs:
           REGEXP_PATCH: '^fix'
           REGEXP_MINOR: '^feat'
           REGEXP_MAJOR: '^break'
-          OUTPUT_FORMAT: '{MAJOR}.{MINOR}.{PATCH}-beta'
 
       - name: see version
         run: echo "${{ steps.semver.outputs.COMPUTED_VERSION }}"
-
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v2
-        with:
-          message: |
-            Publish in progress at : `${{ steps.semver.outputs.COMPUTED_VERSION }}`.
 
       - name: set Version In package.json
         run: |
@@ -59,6 +48,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '20.x'
+          registry-url: 'https://registry.npmjs.org/'
+          scope: '@mathcovax'
 
       - name: install dependencies
         run: npm ci
