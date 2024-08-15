@@ -15,6 +15,10 @@ export default [
   {
     ...yourBullShitRules,
   },
-  duploLint,
+  {
+    ...duploLint,
+    files: ["**/*.{ts,js}"],
+  },
 ];
+
 ```
