@@ -1,13 +1,13 @@
 # @duplojs/eslint
-Règle par défaut de tous les projets `duplojs`.
+Default eslint rules for `duplojs`.
 
-### Instalation
+### Installation
 ```
 npm i @duplojs/eslint --save-dev
 ```
 
-### Utilisation
-Dans un fichier `eslint.config.js`.
+### Usage
+In file `eslint.config.js` :
 ```ts
 import duploLint from "@duplojs/eslint";
 
