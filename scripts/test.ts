@@ -1,7 +1,7 @@
 import { base } from "./base";
 import type { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
-export const open = {
+export const test = {
 	...base,
 	rules: {
 		...base.rules,
@@ -16,7 +16,6 @@ export const open = {
 		"@typescript-eslint/no-empty-object-type": "off",
 		"@typescript-eslint/no-magic-numbers": "off",
 		"@typescript-eslint/no-use-before-define": "off",
-
 		"no-unused-vars": "off",
 		"@typescript-eslint/no-unused-vars": "off",
 		"@typescript-eslint/no-unnecessary-type-parameters": "off",
