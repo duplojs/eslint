@@ -21,7 +21,7 @@ export default [
     {
         ...duplojsEslintBase,
         files: ["**/*.{ts,js}"],
-		ignores: ["**/*.test.{ts,js}"],
+        ignores: ["**/*.test.{ts,js}"],
     },
 ];
 ```
