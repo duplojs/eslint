@@ -27,20 +27,20 @@
     "types"
   ],
   "dependencies": {
-    "@stylistic/eslint-plugin-js": "^2.6.1",
-    "@stylistic/eslint-plugin-ts": "^2.6.1",
-    "@typescript-eslint/eslint-plugin": "^8.1.0",
-    "@typescript-eslint/parser": "^8.0.0",
-    "eslint": "^9.8.0"
+    "@stylistic/eslint-plugin-js": "3.1.0",
+    "@stylistic/eslint-plugin-ts": "3.1.0",
+    "@typescript-eslint/eslint-plugin": "8.23.0",
+    "@typescript-eslint/parser": "8.23.0",
+    "eslint": "9.20.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.4.0",
+    "@commitlint/cli": "19.7.1",
     "@commitlint/config-conventional": "^19.2.2",
     "@types/node": "^22.1.0",
-    "husky": "^9.1.4",
+    "husky": "9.1.7",
     "rollup": "^4.19.2",
     "rollup-plugin-esbuild": "^6.1.1",
-    "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
+    "typescript": "5.7.3",
+    "vitest": "3.0.5"
   }
 }
