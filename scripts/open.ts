@@ -13,7 +13,6 @@ export const open = {
 		"@typescript-eslint/no-explicit-any": "off",
 		"@typescript-eslint/use-unknown-in-catch-callback-variable": "off",
 		"@typescript-eslint/await-thenable": "off",
-		"@typescript-eslint/no-empty-object-type": "off",
 		"@typescript-eslint/no-magic-numbers": "off",
 		"@typescript-eslint/no-use-before-define": "off",
 	},
