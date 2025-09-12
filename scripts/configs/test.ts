@@ -1,10 +1,10 @@
-import { base } from "./base";
+import { defaultConfig } from "./default";
 import type { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
-export const test = {
-	...base,
+export const testConfig = {
+	...defaultConfig,
 	rules: {
-		...base.rules,
+		...defaultConfig.rules,
 		"no-eval": "off",
 		"no-bitwise": "off",
 		"new-cap": "off",
@@ -29,5 +29,16 @@ export const test = {
 		"@typescript-eslint/no-unsafe-return": "off",
 		"@typescript-eslint/no-unsafe-unary-minus": "off",
 		"no-useless-assignment": "off",
+	},
+} as const satisfies FlatConfig.Config;
+
+export const testConfigService = {
+	...testConfig,
+	languageOptions: {
+		...testConfig.languageOptions,
+		parserOptions: {
+			...testConfig.languageOptions.parserOptions,
+			projectService: true,
+		},
 	},
 } as const satisfies FlatConfig.Config;
