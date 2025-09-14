@@ -10,7 +10,7 @@ export const plugin = {
 		"wrap-many-function-argument": wrapManyFunctionArgument,
 		"unwrap-single-function-argument": unwrapSingleFunctionArgument,
 		"wrap-single-function-argument-with-many-generic": wrapSingleFunctionArgumentWithManyGeneric,
-        "wrap-generic": wrapGeneric,
-        "prefix-generic": prefixGeneric,
+		"wrap-generic": wrapGeneric,
+		"prefix-generic": prefixGeneric,
 	},
 } satisfies ESLint.Plugin;

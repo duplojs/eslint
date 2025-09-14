@@ -105,19 +105,17 @@ export const wrapManyFunctionArgument: Rule.RuleModule = {
             const currentText = src.text.slice(open.range[0], close.range[1]);
 
             const multiline = needsMultiline(params);
-            const desired = multiline
-                ? buildMultilineParens(baseIndent, params, (n) => src.getText(n))
-                : buildTargetParens(baseIndent, params, (n) => src.getText(n));
-
-            if (currentText === desired) return;
-
-            context.report({
-                node,
-                messageId: multiline ? "wrap" : "unwrap",
-                fix(fixer) {
-                    return fixer.replaceTextRange([open.range[0], close.range[1]], desired);
-                },
-            });
+            if (multiline) {
+                const desired = buildMultilineParens(baseIndent, params, (n) => src.getText(n));
+                if (currentText === desired) return;
+                context.report({
+                    node,
+                    messageId: "wrap",
+                    fix(fixer) {
+                        return fixer.replaceTextRange([open.range[0], close.range[1]], desired);
+                    },
+                });
+            }
         }
 
         return {
