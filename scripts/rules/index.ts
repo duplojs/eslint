@@ -4,13 +4,15 @@ import { unwrapSingleFunctionArgument } from "./unwrap-single-function-argument"
 import { wrapSingleFunctionArgumentWithManyGeneric } from "./wrap-single-function-argument-with-many-generic";
 import { wrapGeneric } from "./wrap-generic";
 import { prefixGeneric } from "./prefix-generic";
+import { indentIntersection } from "./indent-intersection";
 
 export const plugin = {
 	rules: {
 		"wrap-many-function-argument": wrapManyFunctionArgument,
 		"unwrap-single-function-argument": unwrapSingleFunctionArgument,
 		"wrap-single-function-argument-with-many-generic": wrapSingleFunctionArgumentWithManyGeneric,
-		"wrap-generic": wrapGeneric,
-		"prefix-generic": prefixGeneric,
+        "wrap-generic": wrapGeneric,
+        "prefix-generic": prefixGeneric,
+        "indent-intersection": indentIntersection,
 	},
 } satisfies ESLint.Plugin;

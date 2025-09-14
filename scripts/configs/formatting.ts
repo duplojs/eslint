@@ -183,6 +183,7 @@ export const formattingConfig = {
 		"@duplojs/wrap-single-function-argument-with-many-generic": "error",
 		"@duplojs/wrap-generic": "error",
 		"@duplojs/prefix-generic": "error",
+        "@duplojs/indent-intersection": "error",
 	},
 } as const satisfies Linter.Config;
 
