@@ -2,8 +2,8 @@ import stylisticJs from "@stylistic/eslint-plugin-js";
 import stylisticTs from "@stylistic/eslint-plugin-ts";
 import unusedImports from "eslint-plugin-unused-imports";
 import { plugin } from "../rules";
-import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 import parserTs from "@typescript-eslint/parser";
+import { type Linter } from "eslint";
 
 export const formattingConfig = {
 	plugins: {
@@ -178,10 +178,9 @@ export const formattingConfig = {
 
 		"unused-imports/no-unused-imports": "error",
 
-		"@duplojs/wrap-parens-expression": "error",
-		// "@duplojs/wrap-function-argument": "error",
+		"@duplojs/wrap-many-function-argument": "error",
 	},
-} as const satisfies FlatConfig.Config;
+} as const satisfies Linter.Config;
 
 export const formattingConfigService = {
 	...formattingConfig,
@@ -192,4 +191,4 @@ export const formattingConfigService = {
 			projectService: true,
 		},
 	},
-} as const satisfies FlatConfig.Config;
+} as const satisfies Linter.Config;

@@ -1,5 +1,5 @@
+import { type Linter } from "eslint";
 import { defaultConfig } from "./default";
-import type { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
 export const testConfig = {
 	...defaultConfig,
@@ -30,7 +30,7 @@ export const testConfig = {
 		"@typescript-eslint/no-unsafe-unary-minus": "off",
 		"no-useless-assignment": "off",
 	},
-} as const satisfies FlatConfig.Config;
+} as const satisfies Linter.Config;
 
 export const testConfigService = {
 	...testConfig,
@@ -41,4 +41,4 @@ export const testConfigService = {
 			projectService: true,
 		},
 	},
-} as const satisfies FlatConfig.Config;
+} as const satisfies Linter.Config;

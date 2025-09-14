@@ -1,9 +1,8 @@
-import { type FlatConfig } from "@typescript-eslint/utils/ts-eslint";
-import { wrapParensExpression } from "./wrap-parens-expression/index";
+import { type ESLint } from "eslint";
+import {wrapManyFunctionArgument} from "./wrap-many-function-argument";
 
 export const plugin = {
-	rules: {
-		"wrap-parens-expression": wrapParensExpression,
-		// "wrap-function-argument": wrapFunctionArgument,
-	},
-} satisfies FlatConfig.Plugin;
+    rules: {
+        "wrap-many-function-argument": wrapManyFunctionArgument,
+    },
+} satisfies ESLint.Plugin;

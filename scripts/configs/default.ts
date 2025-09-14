@@ -1,7 +1,7 @@
 import parserTs from "@typescript-eslint/parser";
 import tslint from "@typescript-eslint/eslint-plugin";
 
-import type { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
+import { type Linter } from "eslint";
 
 export const defaultConfig = {
 	plugins: {
@@ -393,7 +393,7 @@ export const defaultConfig = {
 		"@typescript-eslint/unified-signatures": "off",
 		"@typescript-eslint/use-unknown-in-catch-callback-variable": "error",
 	},
-} as const satisfies FlatConfig.Config;
+} as const satisfies Linter.Config;
 
 export const defaultConfigService = {
 	...defaultConfig,
@@ -404,4 +404,4 @@ export const defaultConfigService = {
 			projectService: true,
 		},
 	},
-} as const satisfies FlatConfig.Config;
+} as const satisfies Linter.Config;

@@ -1,5 +1,5 @@
+import { type Linter } from "eslint";
 import { defaultConfig } from "./default";
-import type { FlatConfig } from "@typescript-eslint/utils/ts-eslint";
 
 export const openConfig = {
 	...defaultConfig,
@@ -16,7 +16,7 @@ export const openConfig = {
 		"@typescript-eslint/no-magic-numbers": "off",
 		"@typescript-eslint/no-use-before-define": "off",
 	},
-} as const satisfies FlatConfig.Config;
+} as const satisfies Linter.Config;
 
 export const openConfigService = {
 	...openConfig,
@@ -27,4 +27,4 @@ export const openConfigService = {
 			projectService: true,
 		},
 	},
-} as const satisfies FlatConfig.Config;
+} as const satisfies Linter.Config;
