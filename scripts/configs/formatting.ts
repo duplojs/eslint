@@ -179,6 +179,7 @@ export const formattingConfig = {
 		"unused-imports/no-unused-imports": "error",
 
 		"@duplojs/wrap-many-function-argument": "error",
+		"@duplojs/unwrap-single-function-argument": "error",
 	},
 } as const satisfies Linter.Config;
 

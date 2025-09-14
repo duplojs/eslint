@@ -1,23 +1,29 @@
 import { Rule } from "eslint";
 import { FunctionDeclaration, ArrowFunctionExpression, Pattern, Node } from "estree";
 
-type Param = Pattern;
-
-function countGenericTypeParams(param: Param): number {
-    if (param.type === "Identifier") {
-        const anyParam: any = param as any;
-        const annotation = anyParam.typeAnnotation;
-        if (annotation && annotation.type === "TSTypeAnnotation") {
-            const inner = annotation.typeAnnotation;
-            if (inner && inner.type === "TSTypeReference") {
-                const tps = inner.typeArguments;
-                if (tps) {
-                    return tps.params.length;
-                }
-            }
+function countGenericTypeParams(param: Pattern, getText: (node: Node) => string): number {
+    const txt = getText(param);
+    const colon = txt.indexOf(":");
+    if (colon === -1) return 0;
+    const typeText = txt.slice(colon + 1);
+    const firstLt = typeText.indexOf("<");
+    if (firstLt === -1) return 0;
+    let depth = 0;
+    let count = 0;
+    let inAngles = false;
+    for (let i = firstLt; i < typeText.length; i++) {
+        const ch = typeText[i];
+        if (ch === "<") {
+            depth++;
+            inAngles = true;
+        } else if (ch === ">") {
+            depth--;
+            if (depth === 0) break;
+        } else if (ch === "," && depth === 1) {
+            count++;
         }
     }
-    return 0;
+    return inAngles ? count + 1 : 0;
 }
 
 function buildMultilineParens(
@@ -49,7 +55,7 @@ export const wrapManyFunctionArgument: Rule.RuleModule = {
         type: "layout",
         docs: {
             description:
-                "Wrap function parameters when there is more than one argument, or when a single argument has multiple generic type parameters.",
+                "Wrap function parameters when there is more than one argument",
         },
         fixable: "code",
         schema: [],
@@ -69,11 +75,11 @@ export const wrapManyFunctionArgument: Rule.RuleModule = {
             return match ? match[0] : "";
         }
 
-        function findOpenParen(firstParam: Param): (import("eslint").AST.Token | import("eslint").AST.Comment) | null {
+        function findOpenParen(firstParam: Pattern): (import("eslint").AST.Token | import("eslint").AST.Comment) | null {
             return src.getTokenBefore(firstParam, (t) => t.value === "(");
         }
 
-        function findCloseParen(lastParam: Param | Node): (import("eslint").AST.Token | import("eslint").AST.Comment) | null {
+        function findCloseParen(lastParam: Pattern | Node): (import("eslint").AST.Token | import("eslint").AST.Comment) | null {
             let current: (import("eslint").AST.Token | import("eslint").AST.Comment) | null = src.getTokenAfter(lastParam);
             while (current && current.value !== ")") {
                 current = src.getTokenAfter(current);
@@ -83,7 +89,7 @@ export const wrapManyFunctionArgument: Rule.RuleModule = {
 
         function needsMultiline(params: readonly Pattern[]): boolean {
             if (params.length > 1) return true;
-            if (params.length === 1) return countGenericTypeParams(params[0]) > 1;
+            if (params.length === 1) return countGenericTypeParams(params[0], (n) => src.getText(n)) > 1;
             return false;
         }
 
