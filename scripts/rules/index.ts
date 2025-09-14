@@ -5,6 +5,7 @@ import { wrapSingleFunctionArgumentWithManyGeneric } from "./wrap-single-functio
 import { wrapGeneric } from "./wrap-generic";
 import { prefixGeneric } from "./prefix-generic";
 import { indentIntersection } from "./indent-intersection";
+import { indentUnion } from "./indent-union";
 
 export const plugin = {
 	rules: {
@@ -14,5 +15,6 @@ export const plugin = {
         "wrap-generic": wrapGeneric,
         "prefix-generic": prefixGeneric,
         "indent-intersection": indentIntersection,
+        "indent-union": indentUnion,
 	},
 } satisfies ESLint.Plugin;

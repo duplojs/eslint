@@ -184,6 +184,7 @@ export const formattingConfig = {
 		"@duplojs/wrap-generic": "error",
 		"@duplojs/prefix-generic": "error",
         "@duplojs/indent-intersection": "error",
+        "@duplojs/indent-union": "error",
 	},
 } as const satisfies Linter.Config;
 
