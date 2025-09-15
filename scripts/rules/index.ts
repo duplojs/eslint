@@ -8,6 +8,7 @@ import { indentUnion } from "./indent-union";
 import { indentIntersection } from "./indent-intersection";
 import { wrapIntersection } from "./wrap-intersection";
 import { wrapParensIntersection } from "./wrap-parens-intersection";
+import { wrapUnion } from "./wrap-union";
 
 export const plugin = {
 	rules: {
@@ -20,27 +21,7 @@ export const plugin = {
 		"indent-intersection": indentIntersection,
 		"wrap-intersection": wrapIntersection,
 		"wrap-parens-intersection": wrapParensIntersection,
+		"wrap-union": wrapUnion,
 	},
 } satisfies ESLint.Plugin;
 
-type Test = (
-	string
-	& number
-);
-
-interface tt<
-	GenericT extends string
-		& number,
-> {}
-
-{
-	function fn<
-		GenericT extends(
-			string
-			& number
-			& bigint
-		),
-	>() {
-
-	}
-}

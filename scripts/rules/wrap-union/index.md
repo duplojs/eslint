@@ -24,6 +24,16 @@ type Test =
 	string 
 	| number | bigint
 
+type Test = (
+	string & number & bigint
+)
+
+
+type Test = (
+	string 
+	& number & bigint
+)
+
 [].reduce(
 	(
 		acc,
@@ -72,6 +82,19 @@ type Test =
 	string 
 	| number
 	| bigint
+
+type Test = (
+	string 
+	& number 
+	& bigint
+)
+
+
+type Test = (
+	string 
+	& number 
+	& bigint
+)
 
 [].reduce(
 	(

@@ -6,8 +6,8 @@ describe(
 	async() => {
 		const { fromCode, toCode } = await readEntries(import.meta.dirname);
 
-		it.skip(
-			"wrappe et formate correctement les unions non parenthésées",
+		it(
+			"wrappe et formate correctement les unions",
 			async() => {
 				const { output, message } = await formatWithProjectFormatting(fromCode);
 
@@ -18,4 +18,3 @@ describe(
 		);
 	},
 );
-
