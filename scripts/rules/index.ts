@@ -6,15 +6,29 @@ import { wrapGeneric } from "./wrap-generic";
 import { prefixGeneric } from "./prefix-generic";
 import { indentUnion } from "./indent-union";
 import { indentIntersection } from "./indent-intersection";
+import { wrapIntersection } from "./wrap-intersection";
 
-	export const plugin = {
-		rules: {
-			"wrap-many-function-argument": wrapManyFunctionArgument,
-			"unwrap-single-function-argument": unwrapSingleFunctionArgument,
-			"wrap-single-function-argument-with-many-generic": wrapSingleFunctionArgumentWithManyGeneric,
+export const plugin = {
+	rules: {
+		"wrap-many-function-argument": wrapManyFunctionArgument,
+		"unwrap-single-function-argument": unwrapSingleFunctionArgument,
+		"wrap-single-function-argument-with-many-generic": wrapSingleFunctionArgumentWithManyGeneric,
 		"wrap-generic": wrapGeneric,
 		"prefix-generic": prefixGeneric,
 		"indent-union": indentUnion,
 		"indent-intersection": indentIntersection,
+		"wrap-intersection": wrapIntersection,
 	},
-	} satisfies ESLint.Plugin;
+} satisfies ESLint.Plugin;
+
+type Test = (
+	string
+	& number
+	& (bigint
+		& {})
+);
+
+interface tt<
+	GenericT extends string
+		& number,
+> {}

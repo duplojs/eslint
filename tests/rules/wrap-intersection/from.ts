@@ -38,3 +38,13 @@ function test(
 ) {
 
 }
+
+type Test = (
+	string & number & bigint
+)
+
+
+type Test = (
+	string 
+	& number & bigint
+)
