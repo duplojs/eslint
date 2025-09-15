@@ -26,12 +26,6 @@ type Test = (
 	& number & bigint
 
 )
-
-type Test = string & number
-
-type Test = 
-	string & number 
-	& bigint
 ```
 
 exemple correct:

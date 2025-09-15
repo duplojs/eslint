@@ -18,7 +18,7 @@ export const formattingConfig = {
 			project: true,
 		},
 	},
-	rules: {
+		rules: {
 		"@stylistic/js/array-bracket-newline": ["error", { multiline: true }],
 		"@stylistic/js/array-bracket-spacing": ["error", "never"],
 		"@stylistic/js/array-element-newline": [
@@ -183,9 +183,8 @@ export const formattingConfig = {
 		"@duplojs/wrap-single-function-argument-with-many-generic": "error",
 		"@duplojs/wrap-generic": "error",
 		"@duplojs/prefix-generic": "error",
-		"@duplojs/indent-intersection": "error",
 		"@duplojs/indent-union": "error",
-		"@duplojs/wrap-parens-intersection": "error",
+		"@duplojs/indent-intersection": "error",
 	},
 } as const satisfies Linter.Config;
 

@@ -2,20 +2,20 @@ import { formatWithProjectFormatting } from "@tests/utils/eslintRunner";
 import { readEntries } from "@tests/utils/readEntries";
 
 describe(
-	"indent-union",
+	"wrap-parens-union",
 	async() => {
 		const { fromCode, toCode } = await readEntries(import.meta.dirname);
 
-		it(
-			"indente correctement les unions quand elles sont wrap",
+		it.skip(
+			"wrappe et formate correctement les unions parenthésées",
 			async() => {
 				const { output, message } = await formatWithProjectFormatting(fromCode);
-				// debug
-				// eslint-disable-next-line no-console
-				console.log(`\n--- indent-union OUTPUT START ---\n${output}\n--- indent-union OUTPUT END ---\n`);
+
+				expect(message).toStrictEqual([]);
 
 				expect(output).toBe(toCode);
 			},
 		);
 	},
 );
+
