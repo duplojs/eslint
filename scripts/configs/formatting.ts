@@ -188,6 +188,7 @@ export const formattingConfig = {
 		"@duplojs/wrap-intersection": "error",
 		"@duplojs/wrap-parens-intersection": "error",
 		"@duplojs/wrap-union": "error",
+		"@duplojs/wrap-parens-union": "error",
 	},
 } as const satisfies Linter.Config;
 

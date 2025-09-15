@@ -9,6 +9,7 @@ import { indentIntersection } from "./indent-intersection";
 import { wrapIntersection } from "./wrap-intersection";
 import { wrapParensIntersection } from "./wrap-parens-intersection";
 import { wrapUnion } from "./wrap-union";
+import { wrapParensUnion } from "./wrap-parens-union";
 
 export const plugin = {
 	rules: {
@@ -22,6 +23,7 @@ export const plugin = {
 		"wrap-intersection": wrapIntersection,
 		"wrap-parens-intersection": wrapParensIntersection,
 		"wrap-union": wrapUnion,
+		"wrap-parens-union": wrapParensUnion,
 	},
 } satisfies ESLint.Plugin;
 

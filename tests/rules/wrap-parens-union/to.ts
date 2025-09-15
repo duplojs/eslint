@@ -1,6 +1,6 @@
 //@ts-nocheck
 
-// single-line union inside parens
+// single-line intersection inside parens
 type Test1 = (
 	string
 	| number
@@ -39,19 +39,46 @@ type Test6 = (
 	| bigint
 );
 
-[].reduce(
-	(
-		acc,
-		value: string
-			| number
-			| bigint,
-	) => acc,
-	{},
-);
+// generic constraint with parenthesized intersection
+type TestGeneric<
+	GenericT extends (
+		string
+		| number
+		| bigint
+	),
+> = {
 
+};
+
+// interface with generic constraint
+interface ITest<
+	GenericT extends (
+		string
+		| number
+		| bigint
+	),
+> {
+
+}
+
+// function generic constraint
+function fn<
+	GenericT extends (
+		string
+		| number
+		| bigint
+	),
+>() {
+
+}
+
+// function param annotated with parenthesized intersection
 function test(
-	arg: string
-		| number,
+	arg: (
+		string
+		| number
+		| bigint
+	),
 ) {
 
 }
