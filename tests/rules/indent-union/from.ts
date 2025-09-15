@@ -59,8 +59,21 @@ function bar(
 
 	{
 		type Nested = string
-				| number
+			| number
 | bigint
 	}
 }
 
+// parenthesized union in type alias (exception)
+type TestParenA = (
+"test"
+| "test"
+);
+
+// nested scope with parenthesized union (exception)
+{
+	type TestParenB = (
+			"a"
+	| "b"
+	);
+}

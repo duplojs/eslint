@@ -40,7 +40,36 @@ export const indentUnion: Rule.RuleModule = {
 
             const firstType = node.types[0] as Node;
             const firstLine = firstType.loc!.start.line;
-            const baseIndent = getLineIndent(src, firstLine);
+
+            // Exception: when union is inside parentheses, indent relative to the start
+            // of the line that contains the opening parenthesis, not the first type line.
+            // We detect this by checking if the parent is TSParenthesizedType.
+            let baseLine = firstLine;
+            {
+                let cur: any = (node as unknown as Rule.NodeParentExtension).parent as (Node & { type?: string; loc?: any }) | undefined;
+                while (cur) {
+                    if (cur.type === "TSParenthesizedType") {
+                        baseLine = cur.loc!.start.line;
+                        break;
+                    }
+                    // Stop walking when leaving TS type space to avoid matching function parentheses
+                    if (typeof cur.type !== "string" || !cur.type.startsWith("TS")) break;
+                    cur = (cur as any).parent;
+                }
+                // Fallback/token-based detection: if the first token is immediately preceded by '(',
+                // consider it parenthesized and use that line as base.
+                if (baseLine === firstLine) {
+                    const firstTok = src.getFirstToken(node) as Token | null;
+                    if (firstTok) {
+                        const prevTok = src.getTokenBefore(firstTok) as Token | null;
+                        if (prevTok && prevTok.value === "(") {
+                            baseLine = prevTok.loc!.start.line;
+                        }
+                    }
+                }
+            }
+
+            const baseIndent = getLineIndent(src, baseLine);
             const expectedIndent = `${baseIndent}\t`;
 
             const tokens = src.getTokens(node) as Token[];
@@ -51,6 +80,18 @@ export const indentUnion: Rule.RuleModule = {
             if (!anyWrapped) return;
 
             const fixes: ReturnType<Rule.ReportFixer["replaceTextRange"]>[] = [];
+            // If the union is parenthesized and wrapped, ensure the first type line
+            // is also indented one tab from the base (line with '(')
+            if (baseLine !== firstLine) {
+                const firstTok = src.getFirstToken(firstType) as Token | null;
+                if (firstTok) {
+                    const lineStart = getLineStartIndex(src, firstLine);
+                    const currentIndent = src.text.slice(lineStart, firstTok.range![0]);
+                    if (currentIndent !== expectedIndent) {
+                        fixes.push((fixer) => fixer.replaceTextRange([lineStart, firstTok.range![0]], expectedIndent));
+                    }
+                }
+            }
             for (const pipe of pipeTokens) {
                 const line = pipe.loc!.start.line;
                 if (line <= firstLine) continue;
@@ -76,4 +117,3 @@ export const indentUnion: Rule.RuleModule = {
         } as any;
     },
 };
-

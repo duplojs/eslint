@@ -64,3 +64,16 @@ function bar(
 	}
 }
 
+// parenthesized union in type alias (exception)
+type TestParenA = (
+	"test"
+	| "test"
+);
+
+// nested scope with parenthesized union (exception)
+{
+	type TestParenB = (
+		"a"
+		| "b"
+	);
+}

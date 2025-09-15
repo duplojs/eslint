@@ -50,6 +50,20 @@ function foo(
 
 }
 
+// parenthesized intersection in type alias (exception)
+type TestParenA = (
+	"test"
+	& "test"
+);
+
+// nested scope with parenthesized intersection (exception)
+{
+	type TestParenB = (
+		"a"
+		& "b"
+	);
+}
+
 function bar(
 	arg: string
 		& number,
@@ -75,4 +89,3 @@ function bar(
 			& bigint;
 	}
 }
-

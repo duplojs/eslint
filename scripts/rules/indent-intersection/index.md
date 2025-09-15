@@ -117,11 +117,30 @@ function test(
 }
 
 function test(
-	// \/ debut de la ligne qui fait office de référence  
-		arg: string // premier type
-			& number //indentation de 1
-	// /\  /\ indentation de 1 tab	
-	) {
+// \/ debut de la ligne qui fait office de référence  
+	arg: string // premier type
+		& number //indentation de 1
+// /\  /\ indentation de 1 tab	
+) {
 
-	}
+}
+```
+
+éxcéption:
+les intersection dans les parentaise ne s'indente pas par ropport au premier type mais par rapport au début de la parentaise.
+```ts
+type Test = (
+	"test"
+	& "test"
+);
+
+{
+// \/ debut de la ligne qui fait office de référence 
+	type Test = (
+//     \/ premier type qui suit l'indentation
+		"test"
+		& "test"
+//     /\ indentation de 1 tab
+	);
+}
 ```

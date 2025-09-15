@@ -43,7 +43,31 @@ export const indentIntersection: Rule.RuleModule = {
 
             const firstType = node.types[0] as Node;
             const firstLine = firstType.loc!.start.line;
-            const baseIndent = getLineIndent(src, firstLine);
+            // Exception: when intersection is parenthesized, indent relative to the
+            // line that contains the opening parenthesis, not the first type line.
+            let baseLine = firstLine;
+            {
+                let cur: any = (node as unknown as Rule.NodeParentExtension).parent as (Node & { type?: string; loc?: any }) | undefined;
+                while (cur) {
+                    if (cur.type === "TSParenthesizedType") {
+                        baseLine = cur.loc!.start.line;
+                        break;
+                    }
+                    if (typeof cur.type !== "string" || !cur.type.startsWith("TS")) break;
+                    cur = (cur as any).parent;
+                }
+                if (baseLine === firstLine) {
+                    const firstTok = src.getFirstToken(node) as Token | null;
+                    if (firstTok) {
+                        const prevTok = src.getTokenBefore(firstTok) as Token | null;
+                        if (prevTok && prevTok.value === "(") {
+                            baseLine = prevTok.loc!.start.line;
+                        }
+                    }
+                }
+            }
+
+            const baseIndent = getLineIndent(src, baseLine);
             const expectedIndent = `${baseIndent}\t`;
 
             // Find all '&' tokens inside this node
@@ -56,6 +80,17 @@ export const indentIntersection: Rule.RuleModule = {
             if (!anyWrapped) return;
 
             const fixes: ReturnType<Rule.ReportFixer["replaceTextRange"]>[] = [];
+            // If parenthesized and wrapped, ensure the first type line aligns to expectedIndent
+            if (baseLine !== firstLine) {
+                const firstTok = src.getFirstToken(firstType) as Token | null;
+                if (firstTok) {
+                    const lineStart = getLineStartIndex(src, firstLine);
+                    const currentIndent = src.text.slice(lineStart, firstTok.range![0]);
+                    if (currentIndent !== expectedIndent) {
+                        fixes.push((fixer) => fixer.replaceTextRange([lineStart, firstTok.range![0]], expectedIndent));
+                    }
+                }
+            }
             for (const andTok of andTokens) {
                 const andLine = andTok.loc!.start.line;
                 if (andLine <= firstLine) continue; // only enforce when wrapped to next lines
@@ -83,4 +118,3 @@ export const indentIntersection: Rule.RuleModule = {
         } as any;
     },
 };
-
