@@ -28,3 +28,40 @@ type Test6 = (
 	& number & bigint
 
 )
+
+// generic constraint with parenthesized intersection
+type TestGeneric<
+	GenericT extends (
+		string 
+		& number & bigint)
+> = {
+
+}
+
+// interface with generic constraint
+interface ITest<
+	GenericT extends (
+		string 
+		& number & bigint)
+> {
+
+}
+
+// function generic constraint
+function fn<
+	GenericT extends (
+		string 
+		& number & bigint)
+>(){
+
+}
+
+// function param annotated with parenthesized intersection
+function test(
+	arg: (
+		string 
+		& number & bigint)
+){
+
+}
+

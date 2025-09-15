@@ -186,6 +186,7 @@ export const formattingConfig = {
 		"@duplojs/indent-union": "error",
 		"@duplojs/indent-intersection": "error",
 		"@duplojs/wrap-intersection": "error",
+        "@duplojs/wrap-parens-intersection": "error",
 	},
 } as const satisfies Linter.Config;
 
